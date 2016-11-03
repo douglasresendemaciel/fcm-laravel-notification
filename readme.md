@@ -10,7 +10,7 @@ Run the following command from you terminal:
 
 
  ```bash
- composer require "composer require douglasresendemaciel/fcm-laravel-notification"
+ composer require "douglasresendemaciel/fcm-laravel-notification:@dev"
  ```
 
 or add this to require section in your composer.json file:
