@@ -27,7 +27,7 @@ Open up config/app.php and add the following to the providers key.
 ```php
 'providers' => [
 ...
-\DouglasResende\FCM\NotificationServiceProvider::class
+DouglasResende\FCM\NotificationServiceProvider::class
 ...
 ```
 
