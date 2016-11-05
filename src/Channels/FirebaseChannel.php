@@ -5,7 +5,7 @@ namespace DouglasResende\FCM\Channels;
 use DouglasResende\FCM\Messages\FirebaseMessage;
 use Illuminate\Contracts\Config\Repository as Config;
 use GuzzleHttp\Client;
-use DouglasResende\FCM\FirebaseNotification as Notification;
+use DouglasResende\FCM\Contracts\FirebaseNotification as Notification;
 
 /**
  * Class FirebaseChannel
