@@ -2,7 +2,6 @@
 
 namespace DouglasResende\FCM\Channels;
 
-use DouglasResende\FCM\Messages\FirebaseMessage;
 use Illuminate\Contracts\Config\Repository as Config;
 use GuzzleHttp\Client;
 use Illuminate\Notifications\Notification;
@@ -45,7 +44,8 @@ class FirebaseChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        $message = $notification->toFCM($notifiable, new FirebaseMessage);
+        $message = $notification->toFcm($notifiable);
+        $message->setTo($notifiable->routeNotificationForFcm());
 
         $this->client->post(FirebaseChannel::API_URI, [
             'headers' => [
