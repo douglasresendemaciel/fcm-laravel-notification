@@ -58,6 +58,17 @@ class FirebaseMessage
 
         return $this;
     }
+    
+    /**
+     * @param null $device_token
+     * @return $this
+     */
+    public function setTo($device_token = null)
+    {
+        $this->to = $device_token;
+
+        return $this;
+    }
 
     /**
      * @return string
