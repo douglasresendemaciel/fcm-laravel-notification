@@ -61,6 +61,6 @@ class FirebaseChannel
      */
     private function getApiKey()
     {
-        return $this->config->get('broadcasting.connections.fcm.api_key');
+        return $this->config->get('broadcasting.connections.fcm.key');
     }
 }
