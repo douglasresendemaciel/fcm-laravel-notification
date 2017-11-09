@@ -1,4 +1,4 @@
-# Firebase Cloud Messaging library for laravel´s notifications
+﻿# Firebase Cloud Messaging library for laravel´s notifications
 
 This library allow send push notifications to Firebase Cloud Messaging through laravel´s notifications. 
 
@@ -10,7 +10,7 @@ Run the following command from you terminal:
 
 
  ```bash
- composer require "douglasresendemaciel/fcm-laravel-notification:@dev"
+ composer require "douglasresendemaciel/fcm-laravel-notification:dev-master"
  ```
 
 or add this to require section in your composer.json file:
@@ -35,7 +35,7 @@ DouglasResende\FCM\NotificationServiceProvider::class
 
 First, create your notification class using artisan ```php artisan make:notification MyNotification```
 
-then implement the `\DouglasResende\FCM\Contracts\FirebaseNotification` contract in your notification class
+Then implement your notification: 
 
 ```php
 <?php
@@ -46,30 +46,33 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use DouglasResende\FCM\Contracts\FirebaseNotification;
+use DouglasResende\FCM\Messages\FirebaseMessage;
 
 class MyNotification extends Notification
 {
     use Queueable;
-```
 
-then on ```public function via($notifiable)``` method return ```['fcm']```:
+    public function via($notifiable)
+    {
+        return ['fcm'];
+    }
 
-```php
-...
-public function via($notifiable)
-{
-    return ['fcm'];
+    public function toFcm($notifiable) 
+    {
+       
+        return (new FirebaseMessage())->setContent('Test Notification', 'This is a Test');
+        
+    }
 }
-...
 ```
 
-And finally, open up config/services.php and add the Firebase api key:
+
+And finally, open up config/broadcasting.php and add the Firebase api key to the connections section:
 
 ```php
 ...
 'fcm' => [
-    'key' => 'API_KEY'
+    'key' => env('FCM_API_KEY','YOUR_API_KEY')
 ]
 ...
 ```
