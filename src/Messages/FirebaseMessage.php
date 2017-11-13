@@ -20,6 +20,12 @@ class FirebaseMessage
      * @var null
      */
     private $data = null;
+    
+    /**
+     *
+     * @var string  
+     */
+    private $apiKey = '';
 
     /**
      * @param $topic
@@ -68,6 +74,26 @@ class FirebaseMessage
         $this->to = $device_token;
 
         return $this;
+    }
+    
+    /**
+     * Send this message via the specified API key.
+     * @param string $apiKey
+     * @return $this
+     */
+    public function setApiKey($apiKey = '')
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+    
+    /**
+     * Get the API key for this message (if any)
+     * @return string
+     */
+    public function getApiKey() {
+        return $this->apiKey;
     }
 
     /**

@@ -46,10 +46,19 @@ class FirebaseChannel
     {
         $message = $notification->toFcm($notifiable);
         $message->setTo($notifiable->routeNotificationForFcm());
+        
+        $apiKey = '';
+        if(!empty($message->getApiKey())) {
+            //Use the API key provided by the message.
+            $apiKey = $message->getApiKey();
+        } else {
+            //Use the default api key
+            $apiKey = $this->getApiKey();
+        }
 
         $this->client->post(FirebaseChannel::API_URI, [
             'headers' => [
-                'Authorization' => 'key=' . $this->getApiKey(),
+                'Authorization' => 'key=' . $apiKey,
                 'Content-Type' => 'application/json',
             ],
             'body' => $message->serialize(),
