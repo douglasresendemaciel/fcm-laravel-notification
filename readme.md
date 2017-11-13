@@ -10,7 +10,7 @@ Run the following command from you terminal:
 
 
  ```bash
- composer require "douglasresendemaciel/fcm-laravel-notification:dev-master"
+ composer require "douglasresendemaciel/fcm-laravel-notification:@dev"
  ```
 
 or add this to require section in your composer.json file:
@@ -35,7 +35,7 @@ DouglasResende\FCM\NotificationServiceProvider::class
 
 First, create your notification class using artisan ```php artisan make:notification MyNotification```
 
-Then implement your notification: 
+Implement your notification: 
 
 ```php
 <?php
@@ -66,8 +66,25 @@ class MyNotification extends Notification
 }
 ```
 
+Implement on your notifiable
 
-And finally, open up config/broadcasting.php and add the Firebase api key to the connections section:
+```php
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Model {
+    use Notifiable;
+
+   public function routeNotificationForFcm() {
+        //return a device token, either from the model or from some other place. 
+        return $this->device_token;
+    }
+
+}
+```
+
+
+Open up config/broadcasting.php and add the Firebase api key to the connections section:
 
 ```php
 ...
@@ -75,6 +92,14 @@ And finally, open up config/broadcasting.php and add the Firebase api key to the
     'key' => env('FCM_API_KEY','YOUR_API_KEY')
 ]
 ...
+```
+
+Trigger notification:
+```php
+$User = User::find(1);
+
+//Send Notification
+$User->notify(new MyNotification());
 ```
 
 ## References
